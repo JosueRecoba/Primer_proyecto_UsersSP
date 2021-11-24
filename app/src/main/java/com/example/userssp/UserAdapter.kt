@@ -22,8 +22,17 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val user = users.get(position)
        with(holder){
-           binding.tvOrder.text = user.id.toString()
+           binding.tvOrder.text = (position + 1).toString()
            binding.tvName.text = user.name
+           Glide.with(context)
+               .load(user.url)
+               .diskCacheStrategy(DiskCacheStrategy.ALL)
+               .centerCrop()
+               .circleCrop()
+               .into(binding.imgPhoto)
+
+
+
        }
     }
 
