@@ -3,8 +3,10 @@ package com.example.userssp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.inflate
+import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.auth.User
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = UserAdapter(mutableListOf())
+        userAdapter = UserAdapter(getUsers())
         linearlayoutManager = LinearLayoutManager(this )
 
         binding.recyclerView.apply {
@@ -28,5 +30,19 @@ class MainActivity : AppCompatActivity() {
             var adapter = userAdapter
         }
 
+    }
+    private fun getUsers(): MutableList<User>{
+        val users = mutableListOf<User>()
+
+        val Josue = User(1 , "josue", "Recoba")
+        val Alan = User(2 , "Alan", "Juarez")
+        val Uriel = User(3 , "Uriel", "Lopez")
+
+        users.add(Josue)
+        users.add(Alan)
+        users.add.(Uriel)
+
+
+        return users
     }
 }
