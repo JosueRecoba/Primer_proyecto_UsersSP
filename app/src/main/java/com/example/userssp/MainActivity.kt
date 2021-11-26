@@ -1,6 +1,7 @@
 package com.example.userssp
 
 import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.Global.getString
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.auth.User
 
 class MainActivity : AppCompatActivity(), OnClickListener {
@@ -31,7 +33,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i(tag: "SP", mag: "${getString(R.string.sp_first_time} = $isFirstTime")
 
-        preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+        if (isFirstTime) {
+            MaterialAlertDialog Builder(this)
+                .setTitle(R.string.dialog_title)
+                .setPisitiveButton(R.string.dialog_confirm,{ DialogInterface i ->
+                    preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+                })
+                .setNegativeBotton("cancelar", null)
+                .show()
+
+        }
 
         userAdapter = UserAdapter(getUsers(), this )
         linearlayoutManager = LinearLayoutManager(this )
@@ -43,6 +54,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
     }
+
+    private fun setTitle(dialogTitle: Int): Any {
+
+    }
+
     private fun getUsers(): MutableList<User>{
         val users = mutableListOf<User>()
 
