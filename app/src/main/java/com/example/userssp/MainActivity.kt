@@ -3,12 +3,13 @@ package com.example.userssp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.inflate
+import android.widget.Toast
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.auth.User
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var userAdapter: UserAdapter
     private lateinit var linearlayoutManager: RecyclerView.LayoutManager
@@ -22,10 +23,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = UserAdapter(getUsers())
+        userAdapter = UserAdapter(getUsers(), this )
         linearlayoutManager = LinearLayoutManager(this )
 
         binding.recyclerView.apply {
+            setHasFixedSize(true)
             var layoutManager = linearlayoutManager
             var adapter = userAdapter
         }
@@ -61,5 +63,8 @@ class MainActivity : AppCompatActivity() {
 
 
         return users
+    }
+    override fun onClick(user. User, position: Int){
+        Toast.makeText(this,"$position: ${user.getFullName()}" , Toast.LENGTH_SHORT).show()
     }
 }

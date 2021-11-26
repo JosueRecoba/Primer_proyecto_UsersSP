@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdapter.ViewHolder>(){
+class UserAdapter(private val users: List<User>, private val listener: View.OnClickListener) :
+    RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
     private lateinit var context: Context
 
@@ -21,7 +22,9 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val user = users.get(position)
+
        with(holder){
+           setListener(user, position + 1)
            binding.tvOrder.text = (position + 1).toString()
            binding.tvName.text = user.name + "" + user.lastName
            Glide.with(context)
@@ -40,6 +43,10 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val binding = ItemUserBinding.bind(view)
+
+        fun setListener(user: User, position: Int){
+            binding.root.setONClickListener {listener.onClick(user, position)}
+        }
 
     }
 }
