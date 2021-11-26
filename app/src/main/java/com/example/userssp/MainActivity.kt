@@ -1,7 +1,10 @@
 package com.example.userssp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings.Global.getString
+import android.util.Log
 import android.view.View.inflate
 import android.widget.Toast
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
@@ -25,8 +28,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         val preferences = getPreferences(Context.MODE_PRIVATE)
 
-        val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), false)
+        val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i(tag: "SP", mag: "${getString(R.string.sp_first_time} = $isFirstTime")
+
+        preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
 
         userAdapter = UserAdapter(getUsers(), this )
         linearlayoutManager = LinearLayoutManager(this )
