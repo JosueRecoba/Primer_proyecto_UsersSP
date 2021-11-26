@@ -23,11 +23,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val preferences = getPreferences(Context.MODE_PRIVATE)
+
+        val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), false)
+        Log.i(tag: "SP", mag: "${getString(R.string.sp_first_time} = $isFirstTime")
+
         userAdapter = UserAdapter(getUsers(), this )
         linearlayoutManager = LinearLayoutManager(this )
 
         binding.recyclerView.apply {
-            setHasFixedSize(true)
+            setHasFixedSize(true.)
             var layoutManager = linearlayoutManager
             var adapter = userAdapter
         }
