@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setNegativeBotton("cancelar", null)
                 .show()
 
+
+        } else {
+            val username = preferences.getString(getString((R.string.sp_username), getString(R.string.hint_username))
+            Toast.makeText(this, "Bienbenido $username", Toast. LENGTH_SHORT).show()
         }
 
         userAdapter = UserAdapter(getUsers(), this )
